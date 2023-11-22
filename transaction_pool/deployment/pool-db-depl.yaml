@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pool-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pool-db
+  template:
+    metadata:
+      labels:
+        app: pool-db
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: pool-pow
+            - name: POSTGRES_PASSWORD
+              value: "password"
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres
+          imagePullPolicy: IfNotPresent
+          name: pool-db
+          ports:
+            - containerPort: 5432

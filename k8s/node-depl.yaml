@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pow-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pow-node
+  template:
+    metadata:
+      labels:
+        app: pow-node
+    spec:
+      containers:
+        - env:
+            - name: NODE_ID
+              value: "1"
+            - name: MESSAGE_QUEUE
+              value: "message_queue1"
+            - name: BLOCK_QUEUE
+              value: "block_queue1"
+          image: bogdannaida/pow-node
+          name: pow-node
+          ports:
+            -
+              containerPort: 8080

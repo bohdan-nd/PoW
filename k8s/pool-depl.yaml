@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pool-pow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pool-pow
+  template:
+    metadata:
+      labels:
+        app: pool-pow
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: pool-pow
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pool-db-secret
+                  key: POSTGRES_PASSWORD
+          image: bogdannaida/pool-pow
+          name: pool-pow
+          ports:
+            -
+              containerPort: 8080

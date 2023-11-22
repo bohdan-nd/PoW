@@ -1,0 +1,34 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_generic_services = true;
+import "google/protobuf/empty.proto";
+package com.trspo.grpc.block;
+
+message BlockTransaction{
+  string id =1;
+  string data = 2;
+}
+
+message BlockTransactionList{
+  repeated BlockTransaction transactions=1;
+}
+
+    message BlockMessage{
+  string previousHash=1;
+  string hash = 2;
+  int32 accuracy=3;
+  BlockTransactionList transactionList = 4;
+  int64 nonce=5;
+  string timeStamp = 6;
+  string minerId = 7;
+}
+
+
+
+message AddBlockRequest{
+  BlockMessage minedBlock = 1;
+}
+
+service BlockService{
+  rpc addMinedBlock(AddBlockRequest) returns (google.protobuf.Empty);
+}
